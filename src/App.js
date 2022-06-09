@@ -27,6 +27,14 @@ export class ChildComponent extends React.Component {
       document.getElementById('state-change').innerHTML =
         'Yes, the state is changed';
   }
+  //============== change DOM Example 1
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+    setTimeout(() => {
+      document.getElementById('state-change').innerHTML =
+        'I am componentWillUnmount';
+    }, 10000);
+  }
   render() {
     console.log('This method is responsible to render our JSX to DOM');
     const name = this.state.name;

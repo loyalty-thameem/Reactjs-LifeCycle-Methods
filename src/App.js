@@ -5,14 +5,14 @@ export class ChildComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'shouldComponentUpdate Method',
+      name: 'Constructor Method',
     };
     console.log('Constructor');
   }
 
   shouldComponentUpdate() {
     console.log('shouldComponentUpdate Method');
-    return false; //Change to true for state to update
+    return true; //Change to false for state to no update
   }
   // handle
   componentDidMount() {
@@ -23,13 +23,26 @@ export class ChildComponent extends React.Component {
       });
     }, 5000);
   }
-
+  //=========Previous state
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('getSnapshotBeforeUdpate Method');
+    return (document.getElementById('previous-state').innerHTML =
+      'The previous state was ' + prevState.name);
+  }
+  //==========Current State
+  componentDidUpdate() {
+    console.log('componentDidUpdate Method');
+    document.getElementById('current-state').innerHTML =
+      'This current state was ' + this.state.name;
+  }
   render() {
     console.log('This method is responsible to render our JSX to DOM');
     const name = this.state.name;
     return (
       <div>
         <h1>This is {name}</h1>
+        <p id="previous-state"></p>
+        <p id="current-state"></p>
       </div>
     );
   }

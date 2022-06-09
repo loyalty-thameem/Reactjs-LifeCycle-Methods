@@ -5,32 +5,34 @@ export class ChildComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Constructor Method',
+      data: [],
     };
     console.log('Constructor');
   }
-  // we are changing our initial state of name inside the constructor method to props which we are receiving in getDerivedStateFromProps
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log('getDerivedStateFromProps Method');
-  //   return {
-  //     name: props.nameFromParent,
-  //   };
-  // }
-  // handle API Example1
+
+  // handle API Example2
   componentDidMount() {
     console.log('componentDidMount Method');
     setTimeout(() => {
-      this.setState({
-        name: 'componentDidMount Method',
-      });
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            data: data,
+          });
+        });
     }, 5000);
   }
+
   render() {
     console.log('This method is responsible to render our JSX to DOM');
-    const name = this.state.name;
+    const datas = this.state.data;
     return (
       <div>
-        <p>This is {name} </p>
+        <p>This will print all the name available in API users data</p>
+        {datas.map((data) => (
+          <h1 key={data.id}>{data.name}</h1>
+        ))}
       </div>
     );
   }

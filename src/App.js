@@ -5,34 +5,31 @@ export class ChildComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      name: 'shouldComponentUpdate Method',
     };
     console.log('Constructor');
   }
 
-  // handle API Example2
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate Method');
+    return false; //Change to true for state to update
+  }
+  // handle
   componentDidMount() {
     console.log('componentDidMount Method');
     setTimeout(() => {
-      fetch('https://jsonplaceholder.typicode.com/users')
-        .then((response) => response.json())
-        .then((data) => {
-          this.setState({
-            data: data,
-          });
-        });
+      this.setState({
+        name: 'componentDidMount Method',
+      });
     }, 5000);
   }
 
   render() {
     console.log('This method is responsible to render our JSX to DOM');
-    const datas = this.state.data;
+    const name = this.state.name;
     return (
       <div>
-        <p>This will print all the name available in API users data</p>
-        {datas.map((data) => (
-          <h1 key={data.id}>{data.name}</h1>
-        ))}
+        <h1>This is {name}</h1>
       </div>
     );
   }
@@ -42,7 +39,7 @@ export default class App extends React.Component {
     console.log('Render from parent');
     return (
       <div>
-        <ChildComponent nameFromParent="getDerivedStateFromProps Method" />
+        <ChildComponent />
       </div>
     );
   }

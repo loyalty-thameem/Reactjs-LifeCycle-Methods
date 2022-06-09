@@ -1,58 +1,38 @@
 import React from 'react';
 import './style.css';
 
-export class ChildComponent extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'from previous state',
+      show: false,
     };
-    console.log('Constructor');
-  }
-
-  // handle
-  componentDidMount() {
-    console.log('componentDidMount Method');
-    setTimeout(() => {
-      this.setState({
-        name: 'from current state',
-      });
-    }, 5000);
-  }
-
-  //==========Current State
-  componentDidUpdate(prevState) {
-    console.log('componentDidUpdate Method final ender');
-    if (prevState.name != this.state.name)
-      document.getElementById('state-change').innerHTML =
-        'Yes, the state is changed';
-  }
-  //============== change DOM Example 1
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-    setTimeout(() => {
-      document.getElementById('state-change').innerHTML =
-        'I am componentWillUnmount';
-    }, 10000);
   }
   render() {
-    console.log('This method is responsible to render our JSX to DOM');
-    const name = this.state.name;
+    const toggle = this.state.show;
     return (
       <div>
-        <h1>This is {name}</h1>
-        <p id="state-change"></p>
+        {toggle ? <Child /> : null}
+        <button
+          type="button"
+          id="remove"
+          onClick={() => {
+            this.setState({ show: !this.state.show });
+          }}
+        >
+          Click me to toggle
+        </button>
       </div>
     );
   }
 }
-export default class App extends React.Component {
+export class Child extends React.Component {
+  componentWillUnmount() {
+    console.log('componentWillUnmount Method');
+    alert('button toggle name removed');
+    document.getElementById('remove').innerHTML = 'My toggle name removed';
+  }
   render() {
-    console.log('Render from parent');
-    return (
-      <div>
-        <ChildComponent />
-      </div>
-    );
+    return <div>{'I am a child component'}</div>;
   }
 }

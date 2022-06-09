@@ -10,13 +10,21 @@ export class ChildComponent extends React.Component {
     console.log('Constructor');
   }
   // we are changing our initial state of name inside the constructor method to props which we are receiving in getDerivedStateFromProps
-  static getDerivedStateFromProps(props, state) {
-    console.log('getDerivedStateFromProps Method');
-    return {
-      name: props.nameFromParent,
-    };
+  // static getDerivedStateFromProps(props, state) {
+  //   console.log('getDerivedStateFromProps Method');
+  //   return {
+  //     name: props.nameFromParent,
+  //   };
+  // }
+  // handle API Example1
+  componentDidMount() {
+    console.log('componentDidMount Method');
+    setTimeout(() => {
+      this.setState({
+        name: 'componentDidMount Method',
+      });
+    }, 5000);
   }
-
   render() {
     console.log('This method is responsible to render our JSX to DOM');
     const name = this.state.name;
